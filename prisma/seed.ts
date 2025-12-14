@@ -3,7 +3,8 @@ import { PrismaClient, Language, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
 type LangRecord<T> = Record<Language, T>;
-type Json = Prisma.InputJsonValue;
+const asJsonObject = (value?: Record<string, unknown>): Prisma.JsonObject =>
+  (value ?? {}) as Prisma.JsonObject;
 
 const languages: Language[] = [Language.vi, Language.en, Language.ru];
 
@@ -871,8 +872,8 @@ async function main() {
         key: sectionSeed.key,
         displayOrder: sectionSeed.displayOrder,
         isActive: sectionSeed.isActive ?? true,
-        uiConfig: sectionSeed.uiConfig,
-        metadata: sectionSeed.metadata ?? {},
+        uiConfig: asJsonObject(sectionSeed.uiConfig),
+        metadata: asJsonObject(sectionSeed.metadata),
         translations: {
           create: languages.map((language) => {
             const t = sectionSeed.translations[language];
@@ -881,7 +882,7 @@ async function main() {
               title: t.title,
               subtitle: t.subtitle,
               description: t.description,
-              metadata: t.metadata ?? {},
+              metadata: asJsonObject(t.metadata),
             };
           }),
         },
@@ -890,7 +891,7 @@ async function main() {
             itemType: item.itemType,
             displayOrder: item.displayOrder,
             isActive: item.isActive ?? true,
-            metadata: item.metadata,
+            metadata: asJsonObject(item.metadata),
             translations: {
               create: languages.map((language) => {
                 const t = item.translations[language];
@@ -899,7 +900,7 @@ async function main() {
                   title: t.title ?? null,
                   subtitle: t.subtitle ?? null,
                   description: t.description ?? null,
-                  metadata: t.metadata ?? {},
+                  metadata: asJsonObject(t.metadata),
                 };
               }),
             },
