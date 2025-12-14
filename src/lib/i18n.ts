@@ -5,12 +5,15 @@ export type LanguageCode = (typeof supportedLanguages)[number];
 export const defaultLanguage: LanguageCode = "vi";
 
 export function isSupportedLanguage(value?: string | null): value is LanguageCode {
-  return Boolean(value) && supportedLanguages.includes(value as LanguageCode);
+  if (!value) return false;
+  const normalized = value.trim().toLowerCase();
+  return supportedLanguages.includes(normalized as LanguageCode);
 }
 
 export function normalizeLanguage(value?: string): LanguageCode {
-  if (isSupportedLanguage(value)) {
-    return value;
+  const normalized = value?.trim().toLowerCase();
+  if (isSupportedLanguage(normalized)) {
+    return normalized as LanguageCode;
   }
   return defaultLanguage;
 }

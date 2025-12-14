@@ -119,7 +119,7 @@ const mergeMetadata = (base?: JsonRecord | null, override?: JsonRecord | null): 
   return output;
 };
 
-export const getProfile = cache(async (langInput?: string): Promise<ProfilePayload | null> => {
+export const getProfile = async (langInput?: string): Promise<ProfilePayload | null> => {
   const normalized = normalizeLanguage(langInput);
   const languages = languagePriority(normalized);
 
@@ -210,7 +210,7 @@ export const getProfile = cache(async (langInput?: string): Promise<ProfilePaylo
     },
     sections,
   };
-});
+};
 
 export const getAllProfilePaths = cache(async () => {
   return supportedLanguages.map((lang) => ({ lang }));

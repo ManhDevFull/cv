@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import type { LanguageCode } from "@/lib/i18n";
 
 type Theme = "light" | "dark";
 
@@ -20,7 +21,13 @@ const detectInitialTheme = (): Theme => {
   return prefersDark ? "dark" : "light";
 };
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({
+  children,
+  language,
+}: {
+  children: React.ReactNode;
+  language?: LanguageCode;
+}) {
   const [theme, setTheme] = useState<Theme>(() => detectInitialTheme());
 
   useEffect(() => {
@@ -28,6 +35,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute("data-theme", theme);
     window.localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (!language || typeof document === "undefined") return;
+    document.documentElement.setAttribute("data-language", language);
+  }, [language]);
 
   const value = useMemo(
     () => ({

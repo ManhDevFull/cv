@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { defaultLanguage, isSupportedLanguage } from "./lib/i18n";
+import { defaultLanguage, normalizeLanguage, isSupportedLanguage } from "./lib/i18n";
 
 export function middleware(request: Request) {
   const url = new URL(request.url);
@@ -17,7 +17,7 @@ export function middleware(request: Request) {
   }
 
   // Only allow /{lang}
-  if (segments.length !== 1 || !isSupportedLanguage(segments[0])) {
+  if (segments.length !== 1 || !isSupportedLanguage(normalizeLanguage(segments[0]))) {
     return NextResponse.redirect(new URL(`/${defaultLanguage}`, url));
   }
 

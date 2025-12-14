@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { ProfileShell } from "@/components/profile-shell";
-import { normalizeLanguage } from "@/lib/i18n";
+import { defaultLanguage, isSupportedLanguage, normalizeLanguage } from "@/lib/i18n";
 import { getProfile } from "@/lib/profile";
 
-type Props = { params: { lang?: string } };
+type ParamsPromise = Promise<{ lang?: string }>;
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const lang = normalizeLanguage(params?.lang);
+export async function generateMetadata({ params }: { params: ParamsPromise }): Promise<Metadata> {
+  const { lang: langRaw } = await params;
+  const langParam = langRaw?.trim().toLowerCase();
+  const lang = isSupportedLanguage(langParam) ? langParam : defaultLanguage;
   const data = await getProfile(lang);
   if (!data) return { title: "Profile not found" };
   const { profile } = data;
@@ -37,8 +40,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function LangLandingPage({ params }: Props) {
-  const lang = normalizeLanguage(params?.lang);
+export default async function LangLandingPage({ params }: { params: ParamsPromise }) {
+  const { lang: langRaw } = await params;
+  const langParam = langRaw?.trim().toLowerCase();
+  if (!isSupportedLanguage(langParam)) {
+    redirect(`/${defaultLanguage}`);
+  }
+  const lang = normalizeLanguage(langParam);
   const data = await getProfile(lang);
 
   if (!data) {

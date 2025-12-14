@@ -19,19 +19,22 @@ export const metadata: Metadata = {
   description: "Dynamic, multilingual profile powered entirely by the database.",
 };
 
-export default function RootLayout({
+type ParamsPromise = Promise<{ lang?: string }>;
+
+export default async function RootLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang?: string };
+  params: ParamsPromise;
 }>) {
-  const lang = normalizeLanguage(params?.lang);
+  const { lang: langRaw } = await params;
+  const lang = normalizeLanguage(langRaw);
 
   return (
     <html lang={lang ?? "vi"} data-language={lang ?? "vi"}>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider language={lang}>{children}</ThemeProvider>
       </body>
     </html>
   );

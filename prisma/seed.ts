@@ -3,9 +3,7 @@ import { PrismaClient, Language, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
 type LangRecord<T> = Record<Language, T>;
-type JsonObject = Prisma.JsonObject;
-const EMPTY_JSON_OBJECT: JsonObject = {};
-const ensureJsonObject = (value?: JsonObject): JsonObject => value ?? EMPTY_JSON_OBJECT;
+type Json = Prisma.InputJsonValue;
 
 const languages: Language[] = [Language.vi, Language.en, Language.ru];
 
@@ -16,7 +14,7 @@ const profileTranslations: LangRecord<{
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string[];
-  seoMetadata: JsonObject;
+  seoMetadata: Prisma.JsonObject;
 }> = {
   [Language.vi]: {
     fullName: "Nguyễn Thành Mạnh",
@@ -89,24 +87,24 @@ type SectionSeed = {
   key: string;
   displayOrder: number;
   isActive?: boolean;
-  uiConfig: JsonObject;
-  metadata?: JsonObject;
+  uiConfig: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   translations: LangRecord<{
     title: string;
     subtitle?: string;
     description?: string;
-    metadata?: JsonObject;
+    metadata?: Record<string, unknown>;
   }>;
   items: Array<{
     itemType: string;
     displayOrder: number;
     isActive?: boolean;
-    metadata: JsonObject;
+    metadata: Record<string, unknown>;
     translations: LangRecord<{
       title?: string;
       subtitle?: string;
       description?: string;
-      metadata?: JsonObject;
+      metadata?: Record<string, unknown>;
     }>;
   }>;
 };
@@ -172,7 +170,7 @@ const sections: SectionSeed[] = [
             },
             {
               key: "github",
-              href: "https://github.com/ntmanh",
+              href: "https://github.com/ManhDevFull",
               variant: "ghost",
             },
           ],
@@ -204,7 +202,7 @@ const sections: SectionSeed[] = [
                 {
                   key: "github",
                   label: "Github",
-                  href: "https://github.com/ntmanh",
+                  href: "https://github.com/ManhDevFull",
                   variant: "secondary",
                 },
               ],
@@ -232,7 +230,7 @@ const sections: SectionSeed[] = [
                 {
                   key: "github",
                   label: "GitHub",
-                  href: "https://github.com/ntmanh",
+                  href: "https://github.com/ManhDevFull",
                   variant: "secondary",
                 },
               ],
@@ -260,7 +258,7 @@ const sections: SectionSeed[] = [
                 {
                   key: "github",
                   label: "GitHub",
-                  href: "https://github.com/ntmanh",
+                  href: "https://github.com/ManhDevFull",
                   variant: "secondary",
                 },
               ],
@@ -298,14 +296,14 @@ const sections: SectionSeed[] = [
         displayOrder: 1,
         metadata: {
           platform: "GitHub",
-          url: "https://github.com/ntmanh",
+          url: "https://github.com/ManhDevFull",
           icon: "github",
-          username: "ntmanh",
+          username: "ManhDevFull",
         },
         translations: {
-          [Language.vi]: { title: "Github", subtitle: "@ntmanh" },
-          [Language.en]: { title: "GitHub", subtitle: "@ntmanh" },
-          [Language.ru]: { title: "GitHub", subtitle: "@ntmanh" },
+          [Language.vi]: { title: "Github", subtitle: "@ManhDevFull" },
+          [Language.en]: { title: "GitHub", subtitle: "@ManhDevFull" },
+          [Language.ru]: { title: "GitHub", subtitle: "@ManhDevFull" },
         },
       },
       {
@@ -818,7 +816,6 @@ const sections: SectionSeed[] = [
     ],
   },
 ];
-
 async function main() {
   const profileSlug = "nguyen-thanh-manh";
 
@@ -875,7 +872,7 @@ async function main() {
         displayOrder: sectionSeed.displayOrder,
         isActive: sectionSeed.isActive ?? true,
         uiConfig: sectionSeed.uiConfig,
-        metadata: ensureJsonObject(sectionSeed.metadata),
+        metadata: sectionSeed.metadata ?? {},
         translations: {
           create: languages.map((language) => {
             const t = sectionSeed.translations[language];
@@ -884,7 +881,7 @@ async function main() {
               title: t.title,
               subtitle: t.subtitle,
               description: t.description,
-              metadata: ensureJsonObject(t.metadata),
+              metadata: t.metadata ?? {},
             };
           }),
         },
@@ -902,7 +899,7 @@ async function main() {
                   title: t.title ?? null,
                   subtitle: t.subtitle ?? null,
                   description: t.description ?? null,
-                  metadata: ensureJsonObject(t.metadata),
+                  metadata: t.metadata ?? {},
                 };
               }),
             },

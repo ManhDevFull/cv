@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LanguageBoundary } from "@/components/language-boundary";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -6,6 +7,15 @@ export const metadata: Metadata = {
   description: "Dynamic, multilingual profile powered entirely by the database.",
 };
 
-export default function LangLayout({ children }: { children: React.ReactNode }) {
-  return children;
+type ParamsPromise = Promise<{ lang?: string }>;
+
+export default async function LangLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: ParamsPromise;
+}) {
+  const { lang } = await params;
+  return <LanguageBoundary lang={lang}>{children}</LanguageBoundary>;
 }
