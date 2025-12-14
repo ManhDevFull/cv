@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const langParam = searchParams.get("lang");
-  const language = normalizeLanguage(langParam);
+  const language = normalizeLanguage(langParam ?? undefined);
   const data = await getProfile(language);
 
   if (!data) {

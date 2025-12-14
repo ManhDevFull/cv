@@ -15,7 +15,7 @@ const safeText = (value: unknown | null | undefined) =>
   value === null || value === undefined ? undefined : String(value);
 
 const cardClass =
-  "win95-window frame-medium bg-[var(--panel)] p-4 text-[var(--foreground)]";
+  "bg-[var(--panel)] p-4 text-[var(--foreground)] border border-[var(--border-light)]";
 
 export function SectionRenderer({ section }: SectionRendererProps) {
   if (!section.isActive) return null;
@@ -46,13 +46,16 @@ function SectionShell({
   children: ReactNode;
 }) {
   return (
-    <section id={section.key} className="space-y-2">
+    <section
+      id={section.key}
+      className="space-y-3 border-t border-[var(--border-medium)] pt-6 first:border-0 first:pt-0"
+    >
       <header className="space-y-1">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--foreground)]/85">
+        <p className="text-[11px] font-semibold tracking-[0.08em] text-[var(--foreground)]/65">
           {section.translation?.subtitle ?? section.key}
         </p>
         <div className="flex flex-wrap items-baseline gap-3">
-          <h2 className="text-lg font-bold text-[var(--foreground)]">
+          <h2 className="heading-h2 text-[var(--foreground)]">
             {section.translation?.title ?? section.key}
           </h2>
           {section.translation?.description ? (
@@ -87,22 +90,22 @@ function HeroSection({ section }: SectionRendererProps) {
 
   return (
     <SectionShell section={section}>
-      <div className="grid gap-4 border-[3px] border-[var(--border-strong)] bg-[var(--panel)] p-5 sm:grid-cols-2">
-        <div className="space-y-4">
+      <div className="grid gap-6 frame-level-2 bg-[var(--panel)] p-6 shadow-[var(--shadow-panel)] sm:grid-cols-2">
+        <div className="space-y-5">
           <div className="space-y-2">
-            <h1 className="text-xl font-bold tracking-tight text-[var(--foreground)]">
+            <h1 className="heading-h3 text-[var(--foreground)]">
               {item.translation?.title}
             </h1>
-            <p className="text-sm font-semibold text-[var(--foreground)]/85">
+            <p className="text-sm font-semibold text-[var(--foreground)]/80">
               {item.translation?.subtitle}
             </p>
-            <p className="text-sm text-[var(--foreground)]/80">{item.translation?.description}</p>
+            <p className="body-small text-[var(--foreground)]/82">{item.translation?.description}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <span
                 key={String(tag)}
-                className="win95-button px-2 py-1 text-[11px]"
+                className="tag-chip chip-quiet px-2 py-[5px] text-[11px] font-semibold"
               >
                 {String(tag)}
               </span>
@@ -110,14 +113,14 @@ function HeroSection({ section }: SectionRendererProps) {
           </div>
           <div className="space-y-3">
             {location ? (
-              <div className="flex items-center gap-2 text-sm text-[var(--foreground)]/80">
-                <span className="h-2 w-2 bg-[var(--foreground)]" />
+              <div className="flex items-center gap-2 text-sm text-[var(--foreground)]/78">
+                <span className="h-2 w-2 bg-[var(--foreground)]" aria-hidden />
                 {location}
               </div>
             ) : null}
             {availability ? (
-              <div className="flex items-center gap-2 text-sm text-[var(--foreground)]/85">
-                <span className="h-2 w-2 bg-[var(--foreground)]" />
+              <div className="flex items-center gap-2 text-sm text-[var(--foreground)]/82">
+                <span className="h-2 w-2 bg-[var(--foreground)]" aria-hidden />
                 {availability}
               </div>
             ) : null}
@@ -129,22 +132,22 @@ function HeroSection({ section }: SectionRendererProps) {
           </div>
         </div>
         <div className="space-y-4">
-          <div className="grid gap-2 border-[2px] border-[var(--border-medium)] bg-[var(--panel)] p-3 soft-shadow-light sm:grid-cols-2">
+          <div className="grid gap-2 bg-[var(--panel)] p-3 sm:grid-cols-2">
             {stats.map((stat, idx) => (
-              <div key={idx} className="space-y-1 border-[1px] border-[var(--border-light)] bg-[var(--panel)] p-2">
-                <p className="text-[11px] text-[var(--foreground)]/75">{String(stat.label ?? "Stat")}</p>
+              <div key={idx} className="space-y-1 border-b border-[var(--border-muted)] bg-[var(--panel)] p-2">
+                <p className="text-[11px] text-[var(--foreground)]/70">{String(stat.label ?? "Stat")}</p>
                 <p className="text-base font-semibold text-[var(--foreground)]">
                   {String(stat.value ?? "-")}
                 </p>
               </div>
             ))}
           </div>
-          <div className="space-y-2 border-[2px] border-[var(--border-medium)] bg-[var(--panel)] p-3">
+          <div className="space-y-2 border-t border-[var(--border-muted)] bg-[var(--panel)] p-3">
             <p className="text-sm font-semibold text-[var(--foreground)]">Highlights</p>
             <ul className="space-y-2">
               {highlights.map((highlight, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-sm text-[var(--foreground)]/80">
-                  <span className="mt-1 h-2 w-2 bg-[var(--foreground)]" />
+                  <span className="mt-1 h-2 w-2 bg-[var(--foreground)]" aria-hidden />
                   <span>{String(highlight.label ?? highlight)}</span>
                 </li>
               ))}
@@ -163,7 +166,7 @@ function TimelineSection({ section }: SectionRendererProps) {
         {section.items.map((item, idx) => (
           <div key={item.id} className="relative">
             {idx !== section.items.length - 1 ? (
-              <span className="absolute left-3 top-8 h-full w-px bg-[var(--border)]" aria-hidden />
+              <span className="absolute left-3 top-8 h-full w-px bg-[var(--border-muted)]" aria-hidden />
             ) : null}
             <div className={`${cardClass} relative grid gap-3 sm:grid-cols-[auto,1fr]`}>
               <div className="flex h-6 w-6 items-center justify-center border-2 border-[var(--border-strong)] bg-[var(--panel)] text-xs font-bold text-[var(--foreground)]">
@@ -203,11 +206,11 @@ function CardsSection({ section }: SectionRendererProps) {
   const gridCols = columns >= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
   return (
     <SectionShell section={section}>
-          <div className={`grid gap-3 ${gridCols}`}>
-            {section.items.map((item) => (
-              <div key={item.id} className={`${cardClass} space-y-3`}>
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold text-[var(--foreground)]">
+      <div className={`grid gap-4 ${gridCols}`}>
+        {section.items.map((item) => (
+          <div key={item.id} className={`${cardClass} space-y-3`}>
+            <div className="space-y-1">
+              <h3 className="heading-h3 text-[var(--foreground)]">
                 {item.translation?.title ?? item.itemType}
               </h3>
               {item.translation?.subtitle ? (
@@ -233,15 +236,15 @@ function BadgesSection({ section }: SectionRendererProps) {
   const gridCols = columns >= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
   return (
     <SectionShell section={section}>
-          <div className={`grid gap-3 ${gridCols}`}>
-            {section.items.map((item) => (
-          <div key={item.id} className="frame-medium bg-[var(--panel)] p-3">
+      <div className={`grid gap-4 ${gridCols}`}>
+        {section.items.map((item) => (
+          <div key={item.id} className="frame-level-3 bg-[var(--panel)] p-3">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-[var(--foreground)]">
                 {item.translation?.title ?? item.itemType}
               </p>
               {item.metadata?.level ? (
-                <span className="tag-chip bg-[var(--panel)] text-[11px]">
+                <span className="tag-chip chip-quiet text-[11px]">
                   {String(item.metadata.level)}
                 </span>
               ) : null}
@@ -263,9 +266,9 @@ function IconsSection({ section }: SectionRendererProps) {
         {section.items.map((item) => (
           <div
             key={item.id}
-            className="flex items-center gap-3 frame-medium bg-[var(--panel)] p-3"
+            className="flex items-center gap-3 border border-[var(--border-light)] bg-[var(--panel)] p-3"
           >
-            <div className="flex h-10 w-10 items-center justify-center border-[2px] border-[var(--border-medium)] bg-[var(--panel)] text-sm font-semibold text-[var(--foreground)]">
+            <div className="flex h-10 w-10 items-center justify-center border border-[var(--border-medium)] bg-[var(--panel)] text-sm font-semibold text-[var(--foreground)]">
               {String((item.metadata.icon as string) ?? (item.translation?.title ?? item.itemType))[0]}
             </div>
             <div className="min-w-0">
@@ -324,7 +327,7 @@ function MetadataBadge({ item, keys }: { item: SectionItemView; keys: string[] }
   const endText = end ? `-> ${String(end)}` : "-> Present";
   return (
     <div className="flex items-center gap-2 text-[11px] font-semibold text-[var(--foreground)]">
-      <span className="tag-chip border-[1px] border-[var(--border-medium)] px-2 py-1">
+      <span className="tag-chip chip-quiet px-2 py-1">
         {startText} {endText}
       </span>
     </div>
@@ -404,7 +407,7 @@ function MetadataValue({
 
     return (
       <div className="flex flex-wrap items-center gap-2">
-        <span className="tag-chip px-2 py-1 text-[10px] font-semibold">
+        <span className="tag-chip chip-quiet px-2 py-1 text-[10px] font-semibold">
           {label}
         </span>
         {(value as unknown[]).map((item, idx) => (
@@ -422,7 +425,7 @@ function MetadataValue({
   if (typeof value === "object") {
     if (!value) return null;
     return (
-      <div className="frame-light bg-[var(--panel)] px-3 py-2 text-xs text-[var(--foreground)]/85">
+      <div className="frame-level-3 bg-[var(--panel)] px-3 py-2 text-xs text-[var(--foreground)]/85">
         <p className="font-semibold text-[var(--foreground)]">{label}</p>
         <pre className="whitespace-pre-wrap break-words text-[11px] text-[var(--foreground)]/75">
           {JSON.stringify(value, null, 2)}
@@ -433,7 +436,7 @@ function MetadataValue({
 
   return (
     <div className="flex items-center gap-2">
-      <span className="tag-chip px-2 py-1 text-[10px] font-semibold uppercase tracking-wide">
+      <span className="tag-chip chip-quiet px-2 py-1 text-[10px] font-semibold uppercase tracking-wide">
         {label}
       </span>
       <span className={`font-medium text-[var(--foreground)] ${compact ? "text-xs" : "text-sm"}`}>

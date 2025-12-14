@@ -1,8 +1,11 @@
-import { PrismaClient, Language } from "@prisma/client";
+import { PrismaClient, Language, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 type LangRecord<T> = Record<Language, T>;
+type JsonObject = Prisma.JsonObject;
+const EMPTY_JSON_OBJECT: JsonObject = {};
+const ensureJsonObject = (value?: JsonObject): JsonObject => value ?? EMPTY_JSON_OBJECT;
 
 const languages: Language[] = [Language.vi, Language.en, Language.ru];
 
@@ -13,7 +16,7 @@ const profileTranslations: LangRecord<{
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string[];
-  seoMetadata: Record<string, unknown>;
+  seoMetadata: JsonObject;
 }> = {
   [Language.vi]: {
     fullName: "Nguyễn Thành Mạnh",
@@ -86,24 +89,24 @@ type SectionSeed = {
   key: string;
   displayOrder: number;
   isActive?: boolean;
-  uiConfig: Record<string, unknown>;
-  metadata?: Record<string, unknown>;
+  uiConfig: JsonObject;
+  metadata?: JsonObject;
   translations: LangRecord<{
     title: string;
     subtitle?: string;
     description?: string;
-    metadata?: Record<string, unknown>;
+    metadata?: JsonObject;
   }>;
   items: Array<{
     itemType: string;
     displayOrder: number;
     isActive?: boolean;
-    metadata: Record<string, unknown>;
+    metadata: JsonObject;
     translations: LangRecord<{
       title?: string;
       subtitle?: string;
       description?: string;
-      metadata?: Record<string, unknown>;
+      metadata?: JsonObject;
     }>;
   }>;
 };
@@ -872,7 +875,7 @@ async function main() {
         displayOrder: sectionSeed.displayOrder,
         isActive: sectionSeed.isActive ?? true,
         uiConfig: sectionSeed.uiConfig,
-        metadata: sectionSeed.metadata ?? {},
+        metadata: ensureJsonObject(sectionSeed.metadata),
         translations: {
           create: languages.map((language) => {
             const t = sectionSeed.translations[language];
@@ -881,7 +884,7 @@ async function main() {
               title: t.title,
               subtitle: t.subtitle,
               description: t.description,
-              metadata: t.metadata ?? {},
+              metadata: ensureJsonObject(t.metadata),
             };
           }),
         },
@@ -899,7 +902,7 @@ async function main() {
                   title: t.title ?? null,
                   subtitle: t.subtitle ?? null,
                   description: t.description ?? null,
-                  metadata: t.metadata ?? {},
+                  metadata: ensureJsonObject(t.metadata),
                 };
               }),
             },

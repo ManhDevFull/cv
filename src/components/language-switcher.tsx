@@ -20,8 +20,10 @@ export function LanguageSwitcher({ currentLang, slug, align = "right" }: Props) 
           <Link
             key={lang}
             href={slug ? `/${lang}/${slug}` : `/${lang}`}
-            className={`win95-button px-3 py-1 text-xs uppercase tracking-[0.14em] ${
-              isActive ? "bg-[var(--panel)]" : ""
+            className={`win95-button px-3 py-1 text-[11px] tracking-[0.08em] ${
+              isActive
+                ? "bg-[var(--foreground)] text-[var(--background)] border-[var(--border-strong)]"
+                : "bg-[var(--panel)] text-[var(--foreground)]"
             }`}
             prefetch
           >
