@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  relationMode = "prisma"
+}
+
+enum Language {
+  vi
+  en
+  ru
+}
+
+model Profile {
+  id          String                @id @default(cuid())
+  slug        String                @unique
+  level       String
+  dateOfBirth DateTime?
+  metadata    Json?
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  isActive    Boolean               @default(true)
+
+  translations ProfileTranslation[]
+  sections     Section[]
+}
+
+model ProfileTranslation {
+  id          String   @id @default(cuid())
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   String
+  language    Language
+  fullName    String
+  headline    String?
+  summary     String?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String[]
+  seoMetadata    Json?
+
+  @@unique([profileId, language])
+}
+
+model Section {
+  id           String               @id @default(cuid())
+  profile      Profile              @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId    String
+  key          String
+  displayOrder Int                  @default(0)
+  isActive     Boolean              @default(true)
+  uiConfig     Json
+  metadata     Json?
+
+  items         SectionItem[]
+  translations  SectionTranslation[]
+
+  @@unique([profileId, key])
+  @@index([profileId, displayOrder])
+}
+
+model SectionTranslation {
+  id          String    @id @default(cuid())
+  section     Section   @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId   String
+  language    Language
+  title       String
+  subtitle    String?
+  description String?
+  metadata    Json?
+
+  @@unique([sectionId, language])
+}
+
+model SectionItem {
+  id           String   @id @default(cuid())
+  section      Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId    String
+  itemType     String
+  displayOrder Int      @default(0)
+  isActive     Boolean  @default(true)
+  metadata     Json
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  translations SectionItemTranslation[]
+
+  @@index([sectionId, displayOrder])
+}
+
+model SectionItemTranslation {
+  id             String       @id @default(cuid())
+  sectionItem    SectionItem  @relation(fields: [sectionItemId], references: [id], onDelete: Cascade)
+  sectionItemId  String
+  language       Language
+  title          String?
+  subtitle       String?
+  description    String?
+  metadata       Json?
+
+  @@unique([sectionItemId, language])
+}
