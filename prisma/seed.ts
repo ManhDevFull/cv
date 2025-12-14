@@ -19,12 +19,12 @@ const profileTranslations: LangRecord<{
 }> = {
   [Language.vi]: {
     fullName: "Nguyễn Thành Mạnh",
-    headline: "Senior Full-Stack Engineer · Next.js · Prisma · PostgreSQL",
+    headline: "Fresher Full-Stack Engineer · Next.js · Prisma · PostgreSQL",
     summary:
       "Xây dựng hệ thống web hướng dữ liệu, tối ưu hiệu năng và hỗ trợ nhóm shipping nhanh mà vẫn kiểm soát kiến trúc.",
-    seoTitle: "Nguyễn Thành Mạnh | Senior Full-Stack Engineer",
+    seoTitle: "Nguyễn Thành Mạnh | Fresher Full-Stack Engineer",
     seoDescription:
-      "Senior Full-Stack Engineer tập trung Next.js, Prisma, PostgreSQL. Chuyên thiết kế kiến trúc data-driven, tối ưu JSONB và mở rộng tính năng nhanh.",
+      "Fresher Full-Stack Engineer tập trung Next.js, Prisma, PostgreSQL. Chuyên thiết kế kiến trúc data-driven, tối ưu JSONB và mở rộng tính năng nhanh.",
     seoKeywords: [
       "Nguyễn Thành Mạnh",
       "Full-Stack Engineer",
@@ -41,12 +41,12 @@ const profileTranslations: LangRecord<{
   [Language.en]: {
     fullName: "Nguyễn Thành Mạnh",
     headline:
-      "Senior Full-Stack Engineer focused on Next.js, Prisma, PostgreSQL",
+      "Fresher Full-Stack Engineer focused on Next.js, Prisma, PostgreSQL",
     summary:
       "Designs data-first architectures, ships resilient web products end to end, and mentors teams to deliver faster with guardrails.",
-    seoTitle: "Nguyễn Thành Mạnh | Senior Full-Stack Engineer",
+    seoTitle: "Nguyễn Thành Mạnh | Fresher Full-Stack Engineer",
     seoDescription:
-      "Senior Full-Stack Engineer specialized in Next.js App Router, Prisma ORM, and PostgreSQL JSONB. Builds scalable, content-driven experiences.",
+      "Fresher Full-Stack Engineer specialized in Next.js App Router, Prisma ORM, and PostgreSQL JSONB. Builds scalable, content-driven experiences.",
     seoKeywords: [
       "Nguyen Thanh Manh",
       "Full-Stack Next.js",
@@ -63,12 +63,12 @@ const profileTranslations: LangRecord<{
   [Language.ru]: {
     fullName: "Нгуен Тхань Манх",
     headline:
-      "Senior Full-Stack инженер, Next.js / Prisma / PostgreSQL JSONB",
+      "Fresher Full-Stack инженер, Next.js / Prisma / PostgreSQL JSONB",
     summary:
       "Проектирует data-driven веб‑системы, отвечает за архитектуру и скорость поставки функционала, наставляет команду.",
-    seoTitle: "Нгуен Тхань Манх | Senior Full-Stack инженер",
+    seoTitle: "Нгуен Тхань Манх | Fresher Full-Stack инженер",
     seoDescription:
-      "Senior Full-Stack инженер, специализация Next.js, Prisma и PostgreSQL JSONB. Строит масштабируемые продукты и контентные платформы.",
+      "Fresher Full-Stack инженер, специализация Next.js, Prisma и PostgreSQL JSONB. Строит масштабируемые продукты и контентные платформы.",
     seoKeywords: [
       "Нгуен Тхань Манх",
       "Full-Stack инженер",
@@ -298,7 +298,7 @@ const sections: SectionSeed[] = [
         metadata: {
           platform: "GitHub",
           url: "https://github.com/ManhDevFull",
-          icon: "github",
+          icon: "Github",
           username: "ManhDevFull",
         },
         translations: {
@@ -311,15 +311,15 @@ const sections: SectionSeed[] = [
         itemType: "social_link",
         displayOrder: 2,
         metadata: {
-          platform: "LinkedIn",
-          url: "https://www.linkedin.com/in/ntmanh",
-          icon: "linkedin",
-          username: "ntmanh",
+          platform: "TikTok",
+          url: "https://www.tiktok.com/@manhdevfull",
+          icon: "Tiktok",
+          username: "ManhDevFull",
         },
         translations: {
-          [Language.vi]: { title: "LinkedIn", subtitle: "Kết nối" },
-          [Language.en]: { title: "LinkedIn", subtitle: "Connect" },
-          [Language.ru]: { title: "LinkedIn", subtitle: "Связаться" },
+          [Language.vi]: { title: "TikTok", subtitle: "Kết nối" },
+          [Language.en]: { title: "TikTok", subtitle: "Connect" },
+          [Language.ru]: { title: "TikTok", subtitle: "Связаться" },
         },
       },
       {
@@ -328,7 +328,7 @@ const sections: SectionSeed[] = [
         metadata: {
           platform: "Email",
           url: "mailto:ntmanh@ntmanh.io.vn",
-          icon: "mail",
+          icon: "Mail",
           username: "ntmanh@ntmanh.io.vn",
         },
         translations: {
@@ -342,14 +342,14 @@ const sections: SectionSeed[] = [
         displayOrder: 4,
         metadata: {
           platform: "Website",
-          url: "https://ntmanh.dev",
-          icon: "globe",
-          username: "ntmanh.dev",
+          url: "https://ntmanh.io.vn",
+          icon: "Globe",
+          username: "ntmanh.io.vn",
         },
         translations: {
-          [Language.vi]: { title: "Website", subtitle: "ntmanh.dev" },
-          [Language.en]: { title: "Website", subtitle: "ntmanh.dev" },
-          [Language.ru]: { title: "Сайт", subtitle: "ntmanh.dev" },
+          [Language.vi]: { title: "Website", subtitle: "ntmanh.io.vn" },
+          [Language.en]: { title: "Website", subtitle: "ntmanh.io.vn" },
+          [Language.ru]: { title: "Сайт", subtitle: "ntmanh.io.vn" },
         },
       },
     ],
@@ -465,7 +465,7 @@ const sections: SectionSeed[] = [
         displayOrder: 5,
         metadata: {
           category: "Leadership",
-          level: "Senior",
+          level: "Fresher",
           keywords: [
             "Technical leadership",
             "Mentoring",
@@ -511,7 +511,7 @@ const sections: SectionSeed[] = [
         displayOrder: 1,
         metadata: {
           company: "Vertex E-commerce",
-          role: "Senior Full-Stack Engineer",
+          role: "Fresher Full-Stack Engineer",
           location: "Remote",
           startDate: "2024-01",
           endDate: null,
@@ -524,19 +524,19 @@ const sections: SectionSeed[] = [
         },
         translations: {
           [Language.vi]: {
-            title: "Senior Full-Stack Engineer",
+            title: "Fresher Full-Stack Engineer",
             subtitle: "Vertex E-commerce · Remote",
             description:
               "Dẫn dắt hiện đại hóa nền tảng thương mại, chuyển sang Next.js App Router và tối ưu truy vấn JSONB.",
           },
           [Language.en]: {
-            title: "Senior Full-Stack Engineer",
+            title: "Fresher Full-Stack Engineer",
             subtitle: "Vertex E-commerce · Remote",
             description:
               "Led modernization to App Router, stabilized performance, and shaped engineering rituals.",
           },
           [Language.ru]: {
-            title: "Senior Full-Stack Engineer",
+            title: "Fresher Full-Stack Engineer",
             subtitle: "Vertex E-commerce · Удаленно",
             description:
               "Руководил миграцией на App Router, оптимизировал производительность и процессы команды.",
@@ -688,7 +688,7 @@ const sections: SectionSeed[] = [
         metadata: {
           key: "commerce-accelerator",
           links: [
-            { label: "Case study", href: "https://ntmanh.dev/case/commerce" },
+            { label: "Case study", href: "https://ntmanh.io.vn/case/commerce" },
           ],
           techStack: ["Next.js", "Edge runtime", "Redis cache", "Storyblok"],
           highlights: [
@@ -725,7 +725,7 @@ const sections: SectionSeed[] = [
         metadata: {
           key: "learning-analytics",
           links: [
-            { label: "Demo", href: "https://ntmanh.dev/demo/learning" },
+            { label: "Demo", href: "https://ntmanh.io.vn/demo/learning" },
           ],
           techStack: ["Next.js", "ClickHouse", "Drizzle ETL", "Tailwind"],
           highlights: [
@@ -793,8 +793,8 @@ const sections: SectionSeed[] = [
         translations: {
           [Language.vi]: {
             title:
-              "ĐH Sư phạm Kỹ thuật – ĐH Đà Nẵng",
-            subtitle: "Kỹ thuật phần mềm",
+              "Trường ĐH Sư phạm Kỹ thuật – ĐH Đà Nẵng",
+            subtitle: "Công nghệ thông tin",
             description:
               "Tập trung web, hệ phân tán và mô hình dữ liệu.",
           },
@@ -839,10 +839,10 @@ async function main() {
   const profile = await prisma.profile.create({
     data: {
       slug: profileSlug,
-      level: "Senior",
+      level: "Fresher",
       dateOfBirth: new Date("2005-11-18"),
       metadata: asJson({
-        cvLevel: "Senior",
+        cvLevel: "Fresher",
         location: "Da Nang, Viet Nam",
         focus: ["Next.js", "Prisma", "PostgreSQL", "System design"],
         availability: "Open for backend/full-stack roles",
