@@ -3,8 +3,8 @@ import { PrismaClient, Language, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 
 type LangRecord<T> = Record<Language, T>;
-const asJsonObject = (value?: Record<string, unknown>): Prisma.JsonObject =>
-  (value ?? {}) as Prisma.JsonObject;
+const asJson = (value?: Record<string, unknown>): Prisma.InputJsonValue =>
+  (value ?? {}) as Prisma.InputJsonValue;
 
 const languages: Language[] = [Language.vi, Language.en, Language.ru];
 
@@ -15,7 +15,7 @@ const profileTranslations: LangRecord<{
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string[];
-  seoMetadata: Prisma.JsonObject;
+  seoMetadata: Prisma.InputJsonValue;
 }> = {
   [Language.vi]: {
     fullName: "Nguyễn Thành Mạnh",
@@ -841,12 +841,12 @@ async function main() {
       slug: profileSlug,
       level: "Senior",
       dateOfBirth: new Date("2005-11-18"),
-      metadata: {
+      metadata: asJson({
         cvLevel: "Senior",
         location: "Da Nang, Viet Nam",
         focus: ["Next.js", "Prisma", "PostgreSQL", "System design"],
         availability: "Open for backend/full-stack roles",
-      },
+      }),
       translations: {
         create: languages.map((language) => {
           const t = profileTranslations[language];
@@ -858,7 +858,7 @@ async function main() {
             seoTitle: t.seoTitle,
             seoDescription: t.seoDescription,
             seoKeywords: t.seoKeywords,
-            seoMetadata: t.seoMetadata,
+            seoMetadata: t.seoMetadata as Prisma.InputJsonValue,
           };
         }),
       },
@@ -872,8 +872,8 @@ async function main() {
         key: sectionSeed.key,
         displayOrder: sectionSeed.displayOrder,
         isActive: sectionSeed.isActive ?? true,
-        uiConfig: asJsonObject(sectionSeed.uiConfig),
-        metadata: asJsonObject(sectionSeed.metadata),
+        uiConfig: asJson(sectionSeed.uiConfig),
+        metadata: asJson(sectionSeed.metadata),
         translations: {
           create: languages.map((language) => {
             const t = sectionSeed.translations[language];
@@ -882,7 +882,7 @@ async function main() {
               title: t.title,
               subtitle: t.subtitle,
               description: t.description,
-              metadata: asJsonObject(t.metadata),
+              metadata: asJson(t.metadata),
             };
           }),
         },
@@ -891,7 +891,7 @@ async function main() {
             itemType: item.itemType,
             displayOrder: item.displayOrder,
             isActive: item.isActive ?? true,
-            metadata: asJsonObject(item.metadata),
+            metadata: asJson(item.metadata),
             translations: {
               create: languages.map((language) => {
                 const t = item.translations[language];
@@ -900,7 +900,7 @@ async function main() {
                   title: t.title ?? null,
                   subtitle: t.subtitle ?? null,
                   description: t.description ?? null,
-                  metadata: asJsonObject(t.metadata),
+                  metadata: asJson(t.metadata),
                 };
               }),
             },
