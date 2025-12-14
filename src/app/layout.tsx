@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { defaultLanguage } from "@/lib/i18n";
+import { normalizeLanguage } from "@/lib/i18n";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
@@ -21,11 +21,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: { lang?: string };
 }>) {
+  const lang = normalizeLanguage(params?.lang);
+
   return (
-    <html lang={defaultLanguage}>
+    <html lang={lang ?? "vi"} data-language={lang ?? "vi"}>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

@@ -43,15 +43,14 @@ export default async function LangLandingPage({ params }: Props) {
 
   if (!data) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-6">
-        <div className="frame-strong max-w-lg bg-[var(--panel)] p-6 text-center">
-          <p className="text-lg font-semibold text-[var(--foreground)]">
-            No profiles found. Seed the database to continue.
-          </p>
+      <main className="flex min-h-screen items-center justify-center bg-[var(--paper)] px-6">
+        <div className="brutal-card max-w-lg text-center space-y-2">
+          <p className="brutal-card__title">No profiles found.</p>
+          <p className="brutal-caption">Seed the database to continue.</p>
         </div>
       </main>
     );
   }
 
-  return <ProfileShell data={data} />;
+  return <ProfileShell key={lang} data={data} />;
 }
